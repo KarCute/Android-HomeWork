@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">HomeWork_1</string>
+    <string name="app_text1">username:</string>
+    <string name="app_text2">I have changed</string>
+    <string name="app_text3">password:</string>
+    <string name="blank"> </string>
+    <string name="app_changeText">log in</string>
+    <!--<string name=""-->
+</resources>
