@@ -9,4 +9,6 @@ BUAA 2019 production internship Android homework
 
 - 第四次作业是assignment/clock
 
+- 第五次作业是Chapter-5中的assignment
+
     ^_^
