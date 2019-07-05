@@ -11,4 +11,6 @@ BUAA 2019 production internship Android homework
 
 - 第五次作业是Chapter-5中的assignment
 
+- 第六次作业是Chapter-6（已在一级目录下生产debug-apk文件）
+
     ^_^
