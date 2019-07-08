@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Solution</string>
+    <string name="recording_video">recording video</string>
     <string name="request_data">request data</string>
     <string name="requesting">requesting...</string>
     <string name="solution_2_c1">Solution to Classwork 1</string>

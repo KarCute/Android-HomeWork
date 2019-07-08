@@ -1,11 +1,7 @@
 package com.bytedance.android.lesson.restapi.solution.newtork;
 
-import com.bytedance.android.lesson.restapi.solution.bean.Cat;
-import com.bytedance.android.lesson.restapi.solution.bean.Feed;
 import com.bytedance.android.lesson.restapi.solution.bean.FeedResponse;
 import com.bytedance.android.lesson.restapi.solution.bean.PostVideoResponse;
-
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;

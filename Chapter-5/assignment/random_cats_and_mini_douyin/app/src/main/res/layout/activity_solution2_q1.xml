@@ -1,10 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+<SurfaceView
+    android:id="@+id/surfaceView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Solution2Q1Activity">
+    tools:layout_editor_absoluteX="-16dp"
+    tools:layout_editor_absoluteY="-45dp" />
+
+<SeekBar
+    android:id="@+id/seekBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="8dp"
+    app:layout_constraintBottom_toBottomOf="@+id/surfaceView"
+    app:layout_constraintEnd_toEndOf="@+id/surfaceView"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="@+id/surfaceView"
+    app:layout_constraintTop_toTopOf="@+id/surfaceView"
+    app:layout_constraintVertical_bias="0.977"
+    tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:visibility="invisible"
+        android:layout_width="57dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintEnd_toEndOf="@+id/surfaceView"
+        app:layout_constraintStart_toStartOf="@+id/surfaceView"
+        app:layout_constraintTop_toTopOf="@+id/surfaceView"
+        app:srcCompat="@android:drawable/ic_media_play" />
 
 </android.support.constraint.ConstraintLayout>

@@ -15,19 +15,17 @@ import com.bumptech.glide.Glide;
 import com.bytedance.android.lesson.restapi.solution.bean.Cat;
 import com.bytedance.android.lesson.restapi.solution.newtork.ICatService;
 import com.bytedance.android.lesson.restapi.solution.newtork.RetrofitManager;
-import com.bytedance.android.lesson.restapi.solution.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.support.v7.widget.RecyclerView.Adapter;
-import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.support.v7.widget.RecyclerView.Adapter;
+import static android.support.v7.widget.RecyclerView.ViewHolder;
 
 public class Solution2C1Activity extends AppCompatActivity {
 

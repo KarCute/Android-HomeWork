@@ -1,9 +1,13 @@
 package com.bytedance.android.lesson.restapi.solution;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,11 +19,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bytedance.android.lesson.restapi.solution.bean.Cat;
 import com.bytedance.android.lesson.restapi.solution.bean.Feed;
 import com.bytedance.android.lesson.restapi.solution.bean.FeedResponse;
 import com.bytedance.android.lesson.restapi.solution.bean.PostVideoResponse;
-import com.bytedance.android.lesson.restapi.solution.newtork.ICatService;
 import com.bytedance.android.lesson.restapi.solution.newtork.IMiniDouyinService;
 import com.bytedance.android.lesson.restapi.solution.newtork.RetrofitManager;
 import com.bytedance.android.lesson.restapi.solution.utils.ResourceUtils;
@@ -39,6 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Solution2C2Activity extends AppCompatActivity {
 
+    private static final int REQUEST_EXTERNAL_CAMERA = 101;
     private static final int PICK_IMAGE = 1;
     private static final int PICK_VIDEO = 2;
     private static final String TAG = "Solution2C2Activity";
@@ -48,6 +51,7 @@ public class Solution2C2Activity extends AppCompatActivity {
     private Uri mSelectedVideo;
     public Button mBtn;
     private Button mBtnRefresh;
+    private Button mBtnVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,10 @@ public class Solution2C2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_solution2_c2);
         initRecyclerView();
         initBtns();
+    }
+
+    public static interface OnItemClickListener {
+        void onItemClick(View view);
     }
 
     private void initBtns() {
@@ -79,6 +87,39 @@ public class Solution2C2Activity extends AppCompatActivity {
         });
 
         mBtnRefresh = findViewById(R.id.btn_refresh);
+        mBtnVideo = findViewById(R.id.btn_viedo);
+        mBtnVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(Solution2C2Activity.this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(Solution2C2Activity.this,
+                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(Solution2C2Activity.this,
+                        Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    //todo 在这里申请相机、存储的权限
+
+                    ActivityCompat.requestPermissions(Solution2C2Activity.this, new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},0);
+
+                } else {
+                    startActivity(new Intent(Solution2C2Activity.this, Solution2Q2Activity.class));
+
+                }
+            }
+        });
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_CAMERA: {
+                //todo 判断权限是否已经授予
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    System.out.println("已经获得授权ssssssssssssssss");
+                    startActivity(new Intent(Solution2C2Activity.this, Solution2Q2Activity.class));
+                }
+            }
+            break;
+        }
     }
 
     private void initRecyclerView() {
@@ -90,6 +131,8 @@ public class Solution2C2Activity extends AppCompatActivity {
                 ImageView imageView = new ImageView(viewGroup.getContext());
                 imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 imageView.setAdjustViewBounds(true);
+
+
                 return new Solution2C1Activity.MyViewHolder(imageView);
             }
 
@@ -98,8 +141,17 @@ public class Solution2C2Activity extends AppCompatActivity {
                 ImageView iv = (ImageView) viewHolder.itemView;
 
                 // TODO-C2 (10) Uncomment these 2 lines, assign image url of Feed to this url variable
-                String url = mFeeds.get(i).getImage_url();
+                final String url = mFeeds.get(i).getImage_url();
                 Glide.with(iv.getContext()).load(url).into(iv);
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(Solution2C2Activity.this, , Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Solution2C2Activity.this, Solution2Q1Activity.class);
+                        intent.putExtra("ijkplayer_url",url);
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override public int getItemCount() {
