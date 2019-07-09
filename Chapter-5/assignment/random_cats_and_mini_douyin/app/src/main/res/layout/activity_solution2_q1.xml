@@ -30,7 +30,7 @@ android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageView"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_width="57dp"
         android:layout_height="75dp"
         android:layout_marginStart="8dp"

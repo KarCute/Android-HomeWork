@@ -59,6 +59,7 @@ public class Solution2Q1Activity extends AppCompatActivity {
         try {
             Intent intent = getIntent();
             String videoUrl = intent.getStringExtra("ijkplayer_url");
+            System.out.println("ssssss" + videoUrl);
 //            player.setDataSource(getResources().openRawResourceFd(R.raw.yuminhong));
             player.setDataSource(videoUrl);
 //            player.setDataSource(getApplicationContext(),uri);
@@ -70,6 +71,7 @@ public class Solution2Q1Activity extends AppCompatActivity {
                 public void onPrepared(MediaPlayer mp) {
                     Log.d(TAG, "onPrepared: ");
                     player.start();
+                    System.out.println("ssssssssssssssssssssssssssssssssssssssss");
                     player.setLooping(true);
                     player.pause();
                     seekBar.setMax(player.getDuration());
@@ -159,6 +161,7 @@ public class Solution2Q1Activity extends AppCompatActivity {
             timerTask = null;
             seekBar.setProgress(0);
             player.stop();
+            player.reset();
             player.release();
             player = null;
         }

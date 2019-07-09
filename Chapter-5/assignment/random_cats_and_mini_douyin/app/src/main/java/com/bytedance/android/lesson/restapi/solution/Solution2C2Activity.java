@@ -142,13 +142,14 @@ public class Solution2C2Activity extends AppCompatActivity {
 
                 // TODO-C2 (10) Uncomment these 2 lines, assign image url of Feed to this url variable
                 final String url = mFeeds.get(i).getImage_url();
+                final String video_url = mFeeds.get(i).getVideo_url();
                 Glide.with(iv.getContext()).load(url).into(iv);
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Toast.makeText(Solution2C2Activity.this, , Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Solution2C2Activity.this, Solution2Q1Activity.class);
-                        intent.putExtra("ijkplayer_url",url);
+                        intent.putExtra("ijkplayer_url",video_url);
                         startActivity(intent);
                     }
                 });
@@ -224,12 +225,16 @@ public class Solution2C2Activity extends AppCompatActivity {
             @Override
             public void onResponse(Call<PostVideoResponse> call, Response<PostVideoResponse> response) {
                 Log.d("TAG","upload succeed");
+                //mBtn.setText(R.string.select_an_image);
+                //mBtn.setEnabled(true);
                 Toast.makeText(Solution2C2Activity.this,"Upload succeed!",Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailure(Call<PostVideoResponse> call, Throwable t) {
                 Log.d("TAG","upload failed");
+                //mBtn.setText(R.string.select_an_image);
+                //mBtn.setEnabled(true);
                 Toast.makeText(Solution2C2Activity.this,"Upload failed!",Toast.LENGTH_LONG).show();
             }
         });
