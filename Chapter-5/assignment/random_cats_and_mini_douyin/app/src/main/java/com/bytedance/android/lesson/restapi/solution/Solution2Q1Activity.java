@@ -1,16 +1,20 @@
 package com.bytedance.android.lesson.restapi.solution;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
@@ -26,6 +30,7 @@ public class Solution2Q1Activity extends AppCompatActivity {
     private SurfaceHolder holder;
     private SeekBar seekBar;
     private ImageView imageView;
+    private ImageView imageView2;
     private int position = 0;
     private Timer timer;
     private TimerTask timerTask;
@@ -131,9 +136,27 @@ public class Solution2Q1Activity extends AppCompatActivity {
             }
         });
 
-        surfaceView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+
+
+//        surfaceView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(playState==0){
+//                    playState = 1;
+//                    player.start();
+//                    imageView.setVisibility(View.INVISIBLE);
+//                }else{
+//                    playState = 0;
+//                    player.pause();
+//                    imageView.setVisibility(View.VISIBLE);
+//                }
+//            }
+//        });
+
+        imageView2 = findViewById(R.id.imageView2);
+        surfaceView.setOnTouchListener(new SingleDoubleClickListener(new SingleDoubleClickListener.MyClickCallBack(){
+            public void oneClick(){
                 if(playState==0){
                     playState = 1;
                     player.start();
@@ -143,8 +166,18 @@ public class Solution2Q1Activity extends AppCompatActivity {
                     player.pause();
                     imageView.setVisibility(View.VISIBLE);
                 }
+                //Toast.makeText(Solution2Q1Activity.this,"单击",Toast.LENGTH_LONG).show();
             }
-        });
+            public void doubleClick(){
+                imageView2.setVisibility(View.VISIBLE);
+                ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(imageView2, "alpha", 1f, 0f);
+                alphaAnimator.setRepeatCount(0);
+                alphaAnimator.setInterpolator(new LinearInterpolator());
+                alphaAnimator.setDuration(1500);
+                alphaAnimator.start();
+                //Toast.makeText(Solution2Q1Activity.this,"双击",Toast.LENGTH_LONG).show();
+            }
+        }));
 
     }
 
@@ -202,5 +235,41 @@ public class Solution2Q1Activity extends AppCompatActivity {
         }
     }
 
+    private static class SingleDoubleClickListener implements View.OnTouchListener{
+        private int timeout = 400;
+        private int clickCount = 0;
+        private Handler handler;
+        private  MyClickCallBack myClikCallBack;
+        public interface MyClickCallBack{
+            void oneClick();
+            void doubleClick();
+        }
+
+        public SingleDoubleClickListener(MyClickCallBack myClickCallBack){
+            this.myClikCallBack = myClickCallBack;
+
+            handler = new Handler();
+        }
+
+        public boolean onTouch(View v, MotionEvent event){
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                clickCount ++;
+                boolean b = (boolean) handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (clickCount == 1) {
+                            myClikCallBack.oneClick();
+                        }
+                        else if(clickCount == 2){
+                            myClikCallBack.doubleClick();
+                        }
+                        handler.removeCallbacksAndMessages(null);
+                        clickCount = 0;
+                    }
+                },timeout);
+            }
+            return true;
+        }
+    }
 
 }
